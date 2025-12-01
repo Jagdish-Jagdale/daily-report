@@ -1,17 +1,19 @@
-import { initializeApp } from 'firebase/app';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Firebase configuration
-// Use environment variables for security
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "your-api-key",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "your-auth-domain",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "your-project-id",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "your-storage-bucket",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "your-messaging-sender-id",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "your-app-id"
+  apiKey: "AIzaSyBN-uf0mHiOEKjhTP-TUJWL9zrr_NAbwA8",
+  authDomain: "daily-report-f5a73.firebaseapp.com",
+  projectId: "daily-report-f5a73",
+  storageBucket: "daily-report-f5a73.firebasestorage.app",
+  messagingSenderId: "179365898755",
+  appId: "1:179365898755:web:1eb6c29e2f2f8505f87c36"
 };
 
 // Initialize Firebase
