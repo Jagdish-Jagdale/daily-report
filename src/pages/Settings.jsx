@@ -720,7 +720,7 @@ const Settings = () => {
   const visibleTeams = teams.filter((team) => !team.isDefault);
 
   return (
-    <div className="flex-1 min-h-screen overflow-y-auto bg-gray-50">
+    <div className="flex-1 min-h-screen overflow-y-auto bg-black text-white">
       <Snackbar
         message={snackbar.message}
         type={snackbar.type}
@@ -729,15 +729,15 @@ const Settings = () => {
         duration={4000}
       />
 
-      {/* Add/Edit Member Modal */}
+      {/* Add/Edit Member Modal (dark) */}
       {showAddMemberModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center p-6 border-b">
-              <h3 className="text-lg font-semibold text-gray-800">
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-900 text-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-800">
+            <div className="flex justify-between items-center p-6 border-b border-gray-800">
+              <h3 className="text-lg font-semibold text-white">
                 {editingMember ? "Edit Team Member" : "Add Team Member"}
                 {activeTeam && (
-                  <span className="text-sm text-purple-600 ml-2">
+                  <span className="text-sm text-indigo-300 ml-2">
                     to {teams.find((t) => t.id === activeTeam)?.name}
                   </span>
                 )}
@@ -747,7 +747,7 @@ const Settings = () => {
                   setShowAddMemberModal(false);
                   setFormErrors({});
                 }}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-400 hover:text-gray-200"
               >
                 <X size={20} />
               </button>
@@ -759,13 +759,13 @@ const Settings = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Left Column - Image Controls */}
                   <div>
-                    <h4 className="text-md font-semibold text-gray-700 mb-4">
+                    <h4 className="text-md font-semibold text-gray-100 mb-4">
                       Profile Image
                     </h4>
 
                     {/* Image Type Selection */}
                     <div className="mb-4">
-                      <div className="flex space-x-4">
+                      <div className="flex space-x-4 text-gray-300">
                         <label className="flex items-center">
                           <input
                             type="radio"
@@ -775,7 +775,7 @@ const Settings = () => {
                             onChange={(e) =>
                               handleMemberImageTypeChange(e.target.value)
                             }
-                            className="mr-2 text-purple-600 focus:ring-purple-500"
+                            className="mr-2 text-indigo-500 focus:ring-indigo-500"
                           />
                           <Link size={16} className="mr-1" />
                           Use URL
@@ -789,7 +789,7 @@ const Settings = () => {
                             onChange={(e) =>
                               handleMemberImageTypeChange(e.target.value)
                             }
-                            className="mr-2 text-purple-600 focus:ring-purple-500"
+                            className="mr-2 text-indigo-500 focus:ring-indigo-500"
                           />
                           <Upload size={16} className="mr-1" />
                           Upload File
@@ -800,7 +800,7 @@ const Settings = () => {
                     {/* Image Input */}
                     {memberForm.imageType === "url" ? (
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-gray-200 mb-2">
                           Image URL
                         </label>
                         <input
@@ -809,13 +809,13 @@ const Settings = () => {
                           onChange={(e) =>
                             handleMemberImageUrlChange(e.target.value)
                           }
-                          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                          className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                           placeholder="Enter image URL"
                         />
                       </div>
                     ) : (
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-gray-200 mb-2">
                           Upload Image
                         </label>
                         <input
@@ -823,10 +823,10 @@ const Settings = () => {
                           type="file"
                           accept="image/*"
                           onChange={handleMemberImageUpload}
-                          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                          className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                           key={memberForm.imageType}
                         />
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-gray-400 mt-1">
                           Max size: 1MB. Supported: JPG, PNG, GIF, WebP
                         </p>
                       </div>
@@ -835,10 +835,10 @@ const Settings = () => {
 
                   {/* Right Column - Image Preview */}
                   <div>
-                    <h4 className="text-md font-semibold text-gray-700 mb-4">
+                    <h4 className="text-md font-semibold text-gray-100 mb-4">
                       Preview
                     </h4>
-                    <div className="border border-gray-300 rounded-lg p-4 h-32 flex items-center justify-center">
+                    <div className="border border-gray-800 rounded-lg p-4 h-32 flex items-center justify-center bg-gray-800">
                       {memberImagePreview ? (
                         <div className="relative">
                           <img
@@ -869,7 +869,7 @@ const Settings = () => {
               {/* Member Information */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Name *
                   </label>
                   <input
@@ -883,8 +883,8 @@ const Settings = () => {
                       if (formErrors.name)
                         setFormErrors((prev) => ({ ...prev, name: "" }));
                     }}
-                    className={`w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                      formErrors.name ? "border-red-500" : "border-gray-300"
+                    className={`w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+                      formErrors.name ? "border-red-500" : "border-gray-700"
                     }`}
                     placeholder="Enter full name"
                   />
@@ -896,7 +896,7 @@ const Settings = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Email *
                   </label>
                   <input
@@ -910,8 +910,8 @@ const Settings = () => {
                       if (formErrors.email)
                         setFormErrors((prev) => ({ ...prev, email: "" }));
                     }}
-                    className={`w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                      formErrors.email ? "border-red-500" : "border-gray-300"
+                    className={`w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+                      formErrors.email ? "border-red-500" : "border-gray-700"
                     }`}
                     placeholder="Enter email address"
                   />
@@ -923,7 +923,7 @@ const Settings = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Role *
                   </label>
                   <select
@@ -936,8 +936,8 @@ const Settings = () => {
                       if (formErrors.role)
                         setFormErrors((prev) => ({ ...prev, role: "" }));
                     }}
-                    className={`w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                      formErrors.role ? "border-red-500" : "border-gray-300"
+                    className={`w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+                      formErrors.role ? "border-red-500" : "border-gray-700"
                     }`}
                   >
                     <option value="team_member">Team Member</option>
@@ -958,7 +958,7 @@ const Settings = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Phone
                   </label>
                   <input
@@ -972,8 +972,8 @@ const Settings = () => {
                       if (formErrors.phone)
                         setFormErrors((prev) => ({ ...prev, phone: "" }));
                     }}
-                    className={`w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                      formErrors.phone ? "border-red-500" : "border-gray-300"
+                    className={`w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+                      formErrors.phone ? "border-red-500" : "border-gray-700"
                     }`}
                     placeholder="Enter phone number"
                   />
@@ -986,16 +986,16 @@ const Settings = () => {
               </div>
             </div>
 
-            <div className="flex justify-end space-x-3 p-6 border-t">
+            <div className="flex justify-end space-x-3 p-6 border-t border-gray-800">
               <button
                 onClick={() => setShowAddMemberModal(false)}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
+                className="px-4 py-2 text-gray-300 border border-gray-700 rounded-lg hover:bg-gray-800"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveMember}
-                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500"
               >
                 {editingMember ? "Update" : "Add"} Member
               </button>
@@ -1004,17 +1004,17 @@ const Settings = () => {
         </div>
       )}
 
-      {/* Add Team Modal */}
+      {/* Add Team Modal (dark) */}
       {showAddTeamModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
-            <div className="flex justify-between items-center p-6 border-b">
-              <h3 className="text-lg font-semibold text-gray-800">
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-900 text-white rounded-lg shadow-xl max-w-md w-full border border-gray-800">
+            <div className="flex justify-between items-center p-6 border-b border-gray-800">
+              <h3 className="text-lg font-semibold text-white">
                 Create New Team
               </h3>
               <button
                 onClick={() => setShowAddTeamModal(false)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-400 hover:text-gray-200"
               >
                 <X size={20} />
               </button>
@@ -1022,20 +1022,20 @@ const Settings = () => {
 
             <div className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-200 mb-2">
                   Team ID
                 </label>
                 <input
                   type="text"
                   value={teamForm.teamId}
                   readOnly
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100 text-gray-600 focus:outline-none"
+                  className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none"
                   placeholder="Auto-generated"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-200 mb-2">
                   Team Name *
                 </label>
                 <input
@@ -1044,22 +1044,22 @@ const Settings = () => {
                   onChange={(e) =>
                     setTeamForm((prev) => ({ ...prev, name: e.target.value }))
                   }
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="Enter team name"
                 />
               </div>
             </div>
 
-            <div className="flex justify-end space-x-3 p-6 border-t">
+            <div className="flex justify-end space-x-3 p-6 border-t border-gray-800">
               <button
                 onClick={() => setShowAddTeamModal(false)}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
+                className="px-4 py-2 text-gray-300 border border-gray-700 rounded-lg hover:bg-gray-800"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveTeam}
-                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500"
               >
                 Create Team
               </button>
@@ -1069,19 +1069,23 @@ const Settings = () => {
       )}
 
       <div className="px-8 py-6">
-        <div className="max-w-4xl mx-auto">
-          {/* Breadcrumb */}
-          <nav className="flex items-center space-x-2 text-sm text-gray-500 mb-2">
-            <Home size={16} />
-            <ChevronRight size={14} />
-            <span className="text-gray-900 font-medium">Settings</span>
-          </nav>
+        <div className="max-w-full mx-auto">
+          {/* Header: title + subtitle (left) and Add Team (right) */}
+          <div className="flex items-start justify-between mb-4 gap-4">
+            <div>
+              {/* breadcrumb removed */}
+              <h1 className="text-3xl font-bold text-white">Settings</h1>
+              <p className="text-sm text-gray-400 mt-1">
+                Manage company settings, teams and members.
+              </p>
+            </div>
+          </div>
 
-          <h1 className="text-3xl font-bold text-gray-800 mb-6">Settings</h1>
+          <hr className="border-gray-800 mb-6" />
 
-          {/* Sub-menu Tabs */}
-          <div className="bg-white rounded-lg shadow-sm mb-6">
-            <div className="border-b border-gray-200">
+          {/* Sub-menu Tabs (dark) */}
+          <div className="bg-gray-900 rounded-lg shadow-sm mb-6 border border-gray-800 w-full">
+            <div className="border-b border-gray-800">
               <nav className="flex space-x-8 px-6">
                 {tabs.map((tab) => (
                   <button
@@ -1089,8 +1093,8 @@ const Settings = () => {
                     onClick={() => setActiveTab(tab.id)}
                     className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${
                       activeTab === tab.id
-                        ? "border-purple-600 text-purple-600"
-                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        ? "border-indigo-500 text-indigo-300"
+                        : "border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-700"
                     }`}
                   >
                     {tab.label}
@@ -1104,18 +1108,18 @@ const Settings = () => {
             {/* Company Information Tab */}
             {activeTab === "company" && (
               <>
-                {/* Company Logo Section */}
-                <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+                {/* Company Logo Section (dark) */}
+                <div className="bg-gray-900 border border-gray-800 rounded-lg p-6 mb-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                     {/* Left Column - Logo Controls */}
                     <div>
-                      <h2 className="text-xl font-semibold text-gray-700 mb-4">
+                      <h2 className="text-xl font-semibold text-gray-100 mb-4">
                         Company Logo
                       </h2>
 
                       {/* Logo Type Selection */}
                       <div className="mb-4">
-                        <div className="flex space-x-4">
+                        <div className="flex space-x-4 text-gray-300">
                           <label className="flex items-center">
                             <input
                               type="radio"
@@ -1125,7 +1129,7 @@ const Settings = () => {
                               onChange={(e) =>
                                 handleLogoTypeChange(e.target.value)
                               }
-                              className="mr-2 text-purple-600 focus:ring-purple-500"
+                              className="mr-2 text-indigo-500 focus:ring-indigo-500"
                             />
                             <Link size={16} className="mr-1" />
                             Use URL
@@ -1139,7 +1143,7 @@ const Settings = () => {
                               onChange={(e) =>
                                 handleLogoTypeChange(e.target.value)
                               }
-                              className="mr-2 text-purple-600 focus:ring-purple-500"
+                              className="mr-2 text-indigo-500 focus:ring-indigo-500"
                             />
                             <Upload size={16} className="mr-1" />
                             Upload File
@@ -1150,7 +1154,7 @@ const Settings = () => {
                       {/* Logo Input */}
                       {formData.logoType === "url" ? (
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <label className="block text-sm font-medium text-gray-200 mb-2">
                             Logo URL
                           </label>
                           <input
@@ -1159,13 +1163,13 @@ const Settings = () => {
                             onChange={(e) =>
                               handleLogoUrlChange(e.target.value)
                             }
-                            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             placeholder="Enter logo URL"
                           />
                         </div>
                       ) : (
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <label className="block text-sm font-medium text-gray-200 mb-2">
                             Upload Logo
                           </label>
                           <input
@@ -1173,10 +1177,10 @@ const Settings = () => {
                             type="file"
                             accept="image/*"
                             onChange={handleFileUpload}
-                            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             key={formData.logoType}
                           />
-                          <p className="text-xs text-gray-500 mt-1">
+                          <p className="text-xs text-gray-400 mt-1">
                             Max size: 1MB. Supported: JPG, PNG, GIF, WebP
                           </p>
                         </div>
@@ -1185,10 +1189,10 @@ const Settings = () => {
 
                     {/* Right Column - Logo Preview */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-200 mb-2">
                         Preview
                       </label>
-                      <div className="border border-gray-300 rounded-lg p-4 h-48 flex items-center justify-center">
+                      <div className="border border-gray-800 rounded-lg p-4 h-48 flex items-center justify-center bg-gray-800">
                         {logoPreview ? (
                           <div className="relative">
                             <img
@@ -1216,15 +1220,15 @@ const Settings = () => {
                   </div>
                 </div>
 
-                {/* Company Settings */}
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h2 className="text-xl font-semibold text-gray-700 mb-4">
+                {/* Company Settings (dark) */}
+                <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
+                  <h2 className="text-xl font-semibold text-gray-100 mb-4">
                     Company Information
                   </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
                         Company Name
                       </label>
                       <input
@@ -1233,13 +1237,13 @@ const Settings = () => {
                         onChange={(e) =>
                           handleInputChange("companyName", e.target.value)
                         }
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="Enter company name"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
                         Team Name
                       </label>
                       <input
@@ -1248,13 +1252,13 @@ const Settings = () => {
                         onChange={(e) =>
                           handleInputChange("teamName", e.target.value)
                         }
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="Enter team name"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
                         Address
                       </label>
                       <input
@@ -1263,13 +1267,13 @@ const Settings = () => {
                         onChange={(e) =>
                           handleInputChange("address", e.target.value)
                         }
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="Enter company address"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
                         Email
                       </label>
                       <input
@@ -1278,13 +1282,13 @@ const Settings = () => {
                         onChange={(e) =>
                           handleInputChange("email", e.target.value)
                         }
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="Enter email address"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
                         Phone
                       </label>
                       <input
@@ -1293,13 +1297,13 @@ const Settings = () => {
                         onChange={(e) =>
                           handleInputChange("phone", e.target.value)
                         }
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="Enter phone number"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
                         Website
                       </label>
                       <input
@@ -1308,22 +1312,22 @@ const Settings = () => {
                         onChange={(e) =>
                           handleInputChange("website", e.target.value)
                         }
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="Enter website URL"
                       />
                     </div>
                   </div>
                 </div>
 
-                {/* Office Settings */}
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h2 className="text-xl font-semibold text-gray-700 mb-4">
+                {/* Office Settings (dark) */}
+                <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
+                  <h2 className="text-xl font-semibold text-gray-100 mb-4">
                     Office Settings
                   </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
                         Office Start Time
                       </label>
                       <input
@@ -1332,12 +1336,12 @@ const Settings = () => {
                         onChange={(e) =>
                           handleInputChange("officeStartTime", e.target.value)
                         }
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
                         Office End Time
                       </label>
                       <input
@@ -1346,7 +1350,7 @@ const Settings = () => {
                         onChange={(e) =>
                           handleInputChange("officeEndTime", e.target.value)
                         }
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="w-full border border-gray-700 rounded-lg px-3 py-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       />
                     </div>
                   </div>
@@ -1354,12 +1358,12 @@ const Settings = () => {
               </>
             )}
 
-            {/* Team Members Tab */}
+            {/* Team Members Tab (dark) */}
             {activeTab === "teamMembers" && (
-              <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden">
                 {/* Team Selection Buttons */}
-                <div className="p-6 border-b border-gray-200 bg-gray-50">
-                  <h2 className="text-xl font-semibold text-gray-700 mb-4">
+                <div className="p-6 border-b border-gray-800 bg-gray-900">
+                  <h2 className="text-xl font-semibold text-gray-100 mb-4">
                     Teams
                   </h2>
 
@@ -1370,8 +1374,8 @@ const Settings = () => {
                           onClick={() => setActiveTeam(team.id)}
                           className={`px-4 py-2 pr-8 rounded-lg font-medium transition-colors ${
                             activeTeam === team.id
-                              ? "bg-purple-600 text-white shadow-md"
-                              : "bg-white text-gray-700 border border-gray-300 hover:bg-purple-50 hover:border-purple-300"
+                              ? "bg-indigo-600 text-white shadow-md"
+                              : "bg-gray-800 text-gray-200 border border-gray-700 hover:bg-gray-800"
                           }`}
                         >
                           {team.name}
@@ -1394,7 +1398,7 @@ const Settings = () => {
                           className={`absolute top-0 right-0 p-1 rounded-full transition-all opacity-0 group-hover:opacity-100 ${
                             activeTeam === team.id
                               ? "bg-red-500 hover:bg-red-600 text-white"
-                              : "bg-red-100 hover:bg-red-200 text-red-600"
+                              : "bg-red-700 hover:bg-red-600 text-white"
                           }`}
                           title="Delete team"
                         >
@@ -1415,9 +1419,9 @@ const Settings = () => {
                 </div>
 
                 {/* Team Members Section */}
-                <div className="flex justify-between items-center p-6 border-b border-gray-200">
+                <div className="flex justify-between items-center p-6 border-b border-gray-800">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-700">
+                    <h3 className="text-lg font-semibold text-gray-100">
                       {visibleTeams.length === 0
                         ? "Team Members"
                         : activeTeam
@@ -1427,7 +1431,7 @@ const Settings = () => {
                           } Members`
                         : "Team Members"}
                     </h3>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-gray-400 mt-1">
                       {sortedMembers.length} member
                       {sortedMembers.length !== 1 ? "s" : ""}
                       {visibleTeams.length > 0 && activeTeam
@@ -1454,14 +1458,14 @@ const Settings = () => {
                           placeholder="Search members..."
                           value={searchTerm}
                           onChange={(e) => handleSearch(e.target.value)}
-                          className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 w-64"
+                          className="pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 w-64 text-gray-200"
                         />
                       </div>
                     )}
                     <button
                       onClick={handleAddMember}
                       disabled={!activeTeam}
-                      className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors shadow-sm disabled:bg-gray-400 disabled:cursor-not-allowed"
+                      className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-500 transition-colors shadow-sm disabled:bg-gray-600 disabled:cursor-not-allowed"
                     >
                       <Plus size={16} />
                       <span>Add Member</span>
@@ -1471,11 +1475,11 @@ const Settings = () => {
 
                 {visibleTeams.length === 0 ? (
                   <div className="text-center py-16">
-                    <Users size={64} className="mx-auto text-gray-300 mb-4" />
-                    <h3 className="text-lg font-medium text-gray-500 mb-2">
+                    <Users size={64} className="mx-auto text-gray-400 mb-4" />
+                    <h3 className="text-lg font-medium text-gray-400 mb-2">
                       No teams created yet
                     </h3>
-                    <p className="text-gray-400 text-sm mb-6">
+                    <p className="text-gray-500 text-sm mb-6">
                       Create your first team to start managing members
                     </p>
                     <button
@@ -1488,23 +1492,23 @@ const Settings = () => {
                   </div>
                 ) : !activeTeam ? (
                   <div className="text-center py-16">
-                    <Users size={64} className="mx-auto text-gray-300 mb-4" />
-                    <h3 className="text-lg font-medium text-gray-500 mb-2">
+                    <Users size={64} className="mx-auto text-gray-400 mb-4" />
+                    <h3 className="text-lg font-medium text-gray-400 mb-2">
                       No team selected
                     </h3>
-                    <p className="text-gray-400 text-sm mb-6">
+                    <p className="text-gray-500 text-sm mb-6">
                       Select a team to manage members
                     </p>
                   </div>
                 ) : sortedMembers.length === 0 ? (
                   <div className="text-center py-16">
-                    <Users size={64} className="mx-auto text-gray-300 mb-4" />
-                    <h3 className="text-lg font-medium text-gray-500 mb-2">
+                    <Users size={64} className="mx-auto text-gray-400 mb-4" />
+                    <h3 className="text-lg font-medium text-gray-400 mb-2">
                       {searchTerm
                         ? "No members found"
                         : "No members in this team yet"}
                     </h3>
-                    <p className="text-gray-400 text-sm mb-6">
+                    <p className="text-gray-500 text-sm mb-6">
                       {searchTerm
                         ? "Try adjusting your search terms"
                         : "Start building your team by adding the first member"}
@@ -1513,147 +1517,147 @@ const Settings = () => {
                 ) : (
                   <>
                     <div className="w-full">
-                      <table className="w-full table-fixed">
-                        <thead>
-                          <tr className="bg-gradient-to-r from-purple-50 to-blue-50 border-b-2 border-purple-200">
-                            <th className="w-16 px-4 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
-                              Profile
-                            </th>
-                            <th className="w-1/5 px-4 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
-                              <button
-                                onClick={() => handleSort("name")}
-                                className="flex items-center space-x-1 hover:text-purple-600 transition-colors"
+                      <div className="w-full overflow-x-auto">
+                        <table className="w-full table-fixed min-w-[720px]">
+                          <thead>
+                            <tr className="bg-gray-950 border-b border-gray-800">
+                              <th className="w-16 px-4 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">
+                                Profile
+                              </th>
+                              <th className="w-1/5 px-4 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">
+                                <button
+                                  onClick={() => handleSort("name")}
+                                  className="flex items-center space-x-1 text-gray-300 hover:text-indigo-300"
+                                >
+                                  <span>Name</span>
+                                  <ArrowUpDown size={12} />
+                                </button>
+                              </th>
+                              <th className="w-1/5 px-4 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">
+                                <button
+                                  onClick={() => handleSort("email")}
+                                  className="flex items-center space-x-1 text-gray-300 hover:text-indigo-300"
+                                >
+                                  <span>Email</span>
+                                  <ArrowUpDown size={12} />
+                                </button>
+                              </th>
+                              <th className="w-1/6 px-4 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">
+                                Role
+                              </th>
+                              <th className="w-1/6 px-4 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">
+                                <button
+                                  onClick={() => handleSort("phone")}
+                                  className="flex items-center space-x-1 text-gray-300 hover:text-indigo-300"
+                                >
+                                  <span>Phone</span>
+                                  <ArrowUpDown size={12} />
+                                </button>
+                              </th>
+                              <th className="w-20 px-4 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">
+                                Actions
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-gray-800 bg-gray-900">
+                            {currentRecords.map((member) => (
+                              <tr
+                                key={member.id}
+                                className={`hover:bg-gray-850 transition-all duration-200 ${
+                                  member.role === "team_leader"
+                                    ? "bg-gray-850"
+                                    : ""
+                                }`}
                               >
-                                <span>Name</span>
-                                <ArrowUpDown size={12} />
-                              </button>
-                            </th>
-                            <th className="w-1/5 px-4 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
-                              <button
-                                onClick={() => handleSort("email")}
-                                className="flex items-center space-x-1 hover:text-purple-600 transition-colors"
-                              >
-                                <span>Email</span>
-                                <ArrowUpDown size={12} />
-                              </button>
-                            </th>
-                            <th className="w-1/6 px-4 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
-                              Role
-                            </th>
-                            <th className="w-1/6 px-4 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
-                              <button
-                                onClick={() => handleSort("phone")}
-                                className="flex items-center space-x-1 hover:text-purple-600 transition-colors"
-                              >
-                                <span>Phone</span>
-                                <ArrowUpDown size={12} />
-                              </button>
-                            </th>
-                            <th className="w-20 px-4 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
-                              Actions
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-100">
-                          {currentRecords.map((member, index) => (
-                            <tr
-                              key={member.id}
-                              className={`hover:bg-gradient-to-r hover:from-purple-25 hover:to-blue-25 transition-all duration-200 ${
-                                member.role === "team_leader"
-                                  ? "bg-gradient-to-r from-red-25 to-pink-25"
-                                  : ""
-                              }`}
-                            >
-                              <td className="w-16 px-4 py-4 whitespace-nowrap">
-                                <div className="flex items-center justify-center">
-                                  {member.imageUrl ? (
-                                    <img
-                                      src={member.imageUrl}
-                                      alt={member.name}
-                                      className="h-10 w-10 rounded-full object-cover border-2 border-purple-200"
-                                      onError={(e) => {
-                                        e.target.style.display = "none";
-                                        e.target.nextSibling.style.display =
-                                          "flex";
-                                      }}
-                                    />
-                                  ) : null}
+                                <td className="w-16 px-4 py-4 whitespace-nowrap">
+                                  <div className="flex items-center justify-center">
+                                    {member.imageUrl ? (
+                                      <img
+                                        src={member.imageUrl}
+                                        alt={member.name}
+                                        className="h-10 w-10 rounded-full object-cover border-2 border-gray-700"
+                                        onError={(e) => {
+                                          e.target.style.display = "none";
+                                        }}
+                                      />
+                                    ) : null}
+                                    <div
+                                      className={`h-10 w-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm ${
+                                        member.imageUrl ? "hidden" : "flex"
+                                      }`}
+                                    >
+                                      {member.name.charAt(0).toUpperCase()}
+                                    </div>
+                                  </div>
+                                </td>
+                                <td className="w-1/5 px-4 py-4">
                                   <div
-                                    className={`h-10 w-10 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center text-white font-semibold text-sm ${
-                                      member.imageUrl ? "hidden" : "flex"
+                                    className="text-sm font-semibold text-white truncate"
+                                    title={member.name}
+                                  >
+                                    {member.name}
+                                  </div>
+                                </td>
+                                <td className="w-1/5 px-4 py-4">
+                                  <div
+                                    className="text-sm text-gray-300 truncate"
+                                    title={member.email}
+                                  >
+                                    {member.email}
+                                  </div>
+                                </td>
+                                <td className="w-1/6 px-4 py-4 whitespace-nowrap">
+                                  <span
+                                    className={`inline-flex px-2 py-1 rounded-full text-xs font-bold ${
+                                      member.role === "team_leader"
+                                        ? "bg-gradient-to-r from-red-400 to-pink-500 text-white"
+                                        : "bg-gradient-to-r from-indigo-400 to-purple-500 text-white"
                                     }`}
                                   >
-                                    {member.name.charAt(0).toUpperCase()}
+                                    {member.role === "team_leader"
+                                      ? "👑 Leader"
+                                      : "👨‍💻 Member"}
+                                  </span>
+                                </td>
+                                <td className="w-1/6 px-4 py-4">
+                                  <div
+                                    className="text-sm text-gray-300 font-mono truncate"
+                                    title={member.phone || "-"}
+                                  >
+                                    {member.phone || "-"}
                                   </div>
-                                </div>
-                              </td>
-                              <td className="w-1/5 px-4 py-4">
-                                <div
-                                  className="text-sm font-semibold text-gray-900 truncate"
-                                  title={member.name}
-                                >
-                                  {member.name}
-                                </div>
-                              </td>
-                              <td className="w-1/5 px-4 py-4">
-                                <div
-                                  className="text-sm text-gray-600 truncate"
-                                  title={member.email}
-                                >
-                                  {member.email}
-                                </div>
-                              </td>
-                              <td className="w-1/6 px-4 py-4 whitespace-nowrap">
-                                <span
-                                  className={`inline-flex px-2 py-1 rounded-full text-xs font-bold shadow-sm ${
-                                    member.role === "team_leader"
-                                      ? "bg-gradient-to-r from-red-400 to-pink-500 text-white"
-                                      : "bg-gradient-to-r from-blue-400 to-purple-500 text-white"
-                                  }`}
-                                >
-                                  {member.role === "team_leader"
-                                    ? "👑 Leader"
-                                    : "👨‍💻 Member"}
-                                </span>
-                              </td>
-                              <td className="w-1/6 px-4 py-4">
-                                <div
-                                  className="text-sm text-gray-600 font-mono truncate"
-                                  title={member.phone || "-"}
-                                >
-                                  {member.phone || "-"}
-                                </div>
-                              </td>
-                              <td className="w-20 px-4 py-4 whitespace-nowrap">
-                                <div className="flex items-center justify-center space-x-1">
-                                  <button
-                                    onClick={() => handleEditMember(member)}
-                                    className="bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors p-2 rounded-lg shadow-sm"
-                                    title="Edit member"
-                                  >
-                                    <Edit2 size={14} />
-                                  </button>
-                                  <button
-                                    onClick={() =>
-                                      handleDeleteMember(member.id)
-                                    }
-                                    className="bg-red-100 text-red-600 hover:bg-red-200 transition-colors p-2 rounded-lg shadow-sm"
-                                    title="Delete member"
-                                  >
-                                    <Trash2 size={14} />
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                                </td>
+                                <td className="w-20 px-4 py-4 whitespace-nowrap">
+                                  <div className="flex items-center justify-center space-x-1">
+                                    <button
+                                      onClick={() => handleEditMember(member)}
+                                      className="bg-gray-800 text-gray-200 hover:bg-gray-700 transition-colors p-2 rounded-lg"
+                                      title="Edit member"
+                                    >
+                                      <Edit2 size={14} />
+                                    </button>
+                                    <button
+                                      onClick={() =>
+                                        handleDeleteMember(member.id)
+                                      }
+                                      className="bg-red-700 text-white hover:bg-red-600 transition-colors p-2 rounded-lg"
+                                      title="Delete member"
+                                    >
+                                      <Trash2 size={14} />
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
 
                     {/* Pagination */}
                     {totalPages > 1 && (
-                      <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50">
-                        <div className="text-sm text-gray-500">
+                      <div className="flex items-center justify-between px-6 py-4 border-t border-gray-800 bg-gray-900">
+                        <div className="text-sm text-gray-400">
                           Showing {indexOfFirstRecord + 1} to{" "}
                           {Math.min(indexOfLastRecord, sortedMembers.length)} of{" "}
                           {sortedMembers.length} members
@@ -1662,29 +1666,27 @@ const Settings = () => {
                           <button
                             onClick={handlePreviousPage}
                             disabled={currentPage === 1}
-                            className={`inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium ${
+                            className={`inline-flex items-center px-3 py-2 border border-gray-700 rounded-md text-sm font-medium ${
                               currentPage === 1
-                                ? "text-gray-400 bg-gray-100 cursor-not-allowed"
-                                : "text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                                ? "text-gray-500 bg-gray-800 cursor-not-allowed"
+                                : "text-gray-200 bg-gray-800 hover:bg-gray-700"
                             }`}
                           >
-                            <ChevronLeft size={16} className="mr-1" />
-                            Previous
+                            <ChevronLeft size={16} className="mr-1" /> Previous
                           </button>
-                          <span className="text-sm text-gray-600">
+                          <span className="text-sm text-gray-400">
                             Page {currentPage} of {totalPages}
                           </span>
                           <button
                             onClick={handleNextPage}
                             disabled={currentPage === totalPages}
-                            className={`inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium ${
+                            className={`inline-flex items-center px-3 py-2 border border-gray-700 rounded-md text-sm font-medium ${
                               currentPage === totalPages
-                                ? "text-gray-400 bg-gray-100 cursor-not-allowed"
-                                : "text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                                ? "text-gray-500 bg-gray-800 cursor-not-allowed"
+                                : "text-gray-200 bg-gray-800 hover:bg-gray-700"
                             }`}
                           >
-                            Next
-                            <ChevronRight size={16} className="ml-1" />
+                            Next <ChevronRight size={16} className="ml-1" />
                           </button>
                         </div>
                       </div>
@@ -1694,23 +1696,23 @@ const Settings = () => {
               </div>
             )}
 
-            {/* Report Form Tab */}
+            {/* Report Form Tab (dark) */}
             {activeTab === "reportForm" && (
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <h2 className="text-xl font-semibold text-gray-700 mb-4">
+              <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
+                <h2 className="text-xl font-semibold text-gray-100 mb-4">
                   Report Form Template
                 </h2>
                 <ReportForm />
               </div>
             )}
 
-            {/* Save Button - Only show for Company Information tab */}
+            {/* Save Button - Only show for Company Information tab (dark) */}
             {activeTab === "company" && (
               <div className="flex justify-end">
                 <button
                   onClick={handleSaveSettings}
                   disabled={saving || loading}
-                  className="bg-purple-600 hover:bg-purple-700 disabled:bg-purple-400 text-white font-semibold py-2 px-6 rounded-lg transition-colors duration-200 flex items-center space-x-2"
+                  className="bg-indigo-600 hover:bg-indigo-500 disabled:bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors duration-200 flex items-center space-x-2"
                 >
                   {saving ? (
                     <>

@@ -441,8 +441,21 @@ const Reports = () => {
     return Array.from(new Map(teams.map((t) => [t.id, t])).values());
   };
 
+  // summary counts (used in header cards)
+  const totalReports = reports.length;
+  const recentReports = reports.filter(
+    (r) => new Date(r.date) >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+  ).length;
+  const thisMonthReports = reports.filter((r) => {
+    const d = new Date(r.date);
+    const now = new Date();
+    return (
+      d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
+    );
+  }).length;
+
   return (
-    <div className="flex-1 min-h-screen overflow-y-auto bg-gray-50 p-8">
+    <div className="p-6 min-h-screen bg-black text-white">
       <Snackbar
         message={snackbar.message}
         type={snackbar.type}
@@ -451,37 +464,43 @@ const Reports = () => {
         duration={4000}
       />
 
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800">Reports</h1>
-            <p className="text-gray-600 mt-2">
-              View and manage daily attendance reports
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setShowAddReportModal(true)}
-              className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors shadow-sm"
-            >
-              <Plus size={20} />
-              <span>Add Report Data</span>
-            </button>
-            <div className="flex items-center space-x-2 bg-purple-100 px-4 py-2 rounded-lg">
-              <FileText className="text-purple-600" size={20} />
-              <span className="font-semibold text-purple-600">
-                {filteredReports.length} Reports
-              </span>
-            </div>
-          </div>
+      <div className="max-w-full mx-auto">
+        {/* Header */}
+        <div className="mb-4">
+          <h1 className="text-2xl font-bold">Reports</h1>
+          <p className="text-sm text-gray-400 mt-1">
+            View and manage daily attendance reports.
+          </p>
         </div>
 
-        {/* Filters */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <hr className="border-gray-800 mb-6" />
+
+        {/* Summary cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          <div className="bg-gray-900 border border-gray-800 rounded p-4">
+            <div className="text-sm text-gray-400">Total Reports</div>
+            <div className="text-2xl font-bold mt-2">{totalReports}</div>
+          </div>
+
+          <div className="bg-gray-900 border border-gray-800 rounded p-4">
+            <div className="text-sm text-gray-400">Recent (7 days)</div>
+            <div className="text-2xl font-bold mt-2">{recentReports}</div>
+          </div>
+
+          <div className="bg-gray-900 border border-gray-800 rounded p-4">
+            <div className="text-sm text-gray-400">This Month</div>
+            <div className="text-2xl font-bold mt-2">{thisMonthReports}</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Filters (dark) */}
+      <div className="bg-gray-900 border border-gray-800 rounded p-4 mb-6">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <div className="flex items-center gap-3 w-full md:w-auto">
             <div className="relative">
               <Search
-                size={18}
+                size={16}
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
               />
               <input
@@ -489,19 +508,19 @@ const Reports = () => {
                 placeholder="Search by team, leader, or date..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-200"
               />
             </div>
 
             <div className="relative">
               <Filter
-                size={18}
+                size={16}
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
               />
               <select
                 value={filterTeam}
                 onChange={(e) => setFilterTeam(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none"
+                className="pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-200"
               >
                 <option value="all">All Teams</option>
                 {getUniqueTeams().map((team) => (
@@ -511,287 +530,290 @@ const Reports = () => {
                 ))}
               </select>
             </div>
+          </div>
 
+          <div className="flex items-center gap-3">
             <button
               onClick={loadReports}
-              className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center space-x-2"
+              className="bg-indigo-600 text-white px-3 py-2 rounded hover:bg-indigo-500 transition-colors"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                />
-              </svg>
-              <span>Refresh</span>
+              Refresh
+            </button>
+            <button
+              onClick={() => setShowAddReportModal(true)}
+              className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded shadow"
+            >
+              <Plus />
+              <span className="text-sm">Add Report</span>
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Reports List */}
-        {loading ? (
-          <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading reports...</p>
-          </div>
-        ) : filteredReports.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-            <FileText size={64} className="mx-auto text-gray-300 mb-4" />
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">
-              No Reports Found
-            </h3>
-            <p className="text-gray-500">
-              {searchTerm || filterTeam !== "all"
-                ? "Try adjusting your filters"
-                : "Create your first report to get started"}
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredReports.map((report) => (
-              <div
-                key={report.id}
-                className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-6"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="bg-purple-100 p-2 rounded-lg">
-                      <FileText className="text-purple-600" size={24} />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-800">
-                        {report.teamName}
-                      </h3>
-                      <p className="text-sm text-gray-500">
-                        {report.teamLeaderName}
-                      </p>
-                    </div>
+      {/* Reports List (dark cards) */}
+      {loading ? (
+        <div className="bg-gray-900 rounded-lg shadow-sm p-12 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-400 mx-auto"></div>
+          <p className="mt-4 text-gray-400">Loading reports...</p>
+        </div>
+      ) : filteredReports.length === 0 ? (
+        <div className="bg-gray-900 rounded-lg shadow-sm p-12 text-center">
+          <FileText size={64} className="mx-auto text-gray-500 mb-4" />
+          <h3 className="text-xl font-semibold text-gray-300 mb-2">
+            No Reports Found
+          </h3>
+          <p className="text-gray-400">
+            {searchTerm || filterTeam !== "all"
+              ? "Try adjusting your filters"
+              : "Create your first report to get started"}
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredReports.map((report) => (
+            <div
+              key={report.id}
+              className="bg-gray-900 border border-gray-800 rounded-lg hover:shadow-md transition-shadow p-6"
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-gray-800 p-2 rounded-lg">
+                    <FileText className="text-indigo-400" size={24} />
                   </div>
-                </div>
-
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Date:</span>
-                    <span className="font-medium text-gray-800">
-                      {report.date}
-                    </span>
+                  <div>
+                    <h3 className="font-semibold text-white">
+                      {report.teamName}
+                    </h3>
+                    <p className="text-sm text-gray-400">
+                      {report.teamLeaderName}
+                    </p>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Present:</span>
-                    <span className="font-medium text-green-600">
-                      {report.present}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Total:</span>
-                    <span className="font-medium text-gray-800">
-                      {report.totalEmployees}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Absent:</span>
-                    <span className="font-medium text-red-600">
-                      {report.totalEmployees - report.present}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                  <button
-                    onClick={() => handleViewDetails(report)}
-                    className="text-purple-600 hover:text-purple-700 font-medium text-sm flex items-center space-x-1"
-                  >
-                    <Eye size={16} />
-                    <span>View</span>
-                  </button>
-                  <button
-                    onClick={() => confirmDeleteReport(report)}
-                    className="text-red-600 hover:text-red-700 font-medium text-sm flex items-center space-x-1"
-                  >
-                    <Trash2 size={16} />
-                    <span>Delete</span>
-                  </button>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
 
-        {/* Delete Confirmation Modal */}
-        {showDeleteModal && reportToDelete && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
-              <div className="p-6">
-                <div className="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full mb-4">
-                  <AlertTriangle className="text-red-600" size={24} />
+              <div className="space-y-2 mb-4 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-400">Date:</span>
+                  <span className="font-medium text-gray-200">
+                    {report.date}
+                  </span>
                 </div>
-
-                <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">
-                  Delete Report
-                </h3>
-
-                <p className="text-sm text-gray-600 text-center mb-6">
-                  Are you sure you want to delete the report for{" "}
-                  <strong>{reportToDelete.teamName}</strong> dated{" "}
-                  <strong>{reportToDelete.date}</strong>? This action cannot be
-                  undone.
-                </p>
-
-                <div className="flex justify-end space-x-3">
-                  <button
-                    onClick={() => {
-                      setShowDeleteModal(false);
-                      setReportToDelete(null);
-                    }}
-                    className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors font-medium"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleDeleteReport}
-                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium"
-                  >
-                    Delete Report
-                  </button>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-400">Present:</span>
+                  <span className="font-medium text-green-400">
+                    {report.present}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-400">Total:</span>
+                  <span className="font-medium text-gray-200">
+                    {report.totalEmployees}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-400">Absent:</span>
+                  <span className="font-medium text-red-400">
+                    {report.totalEmployees - report.present}
+                  </span>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
 
-        {/* Add Report Popup */}
-        <ReportPopup
-          isOpen={showAddReportModal}
-          onClose={() => setShowAddReportModal(false)}
-          onSave={handleSaveReportData}
-          initialData={null}
-        />
-
-        {/* Report Popup Modal */}
-        <ReportPopup
-          isOpen={isPopupOpen}
-          onClose={() => {
-            setIsPopupOpen(false);
-            setEditingReport(null);
-          }}
-          onSave={handleSaveReport}
-          initialData={editingReport}
-        />
-
-        {/* Details Modal */}
-        {showDetailsModal && selectedReport && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="flex justify-between items-center p-6 border-b">
-                <h2 className="text-2xl font-bold text-gray-800">
-                  Report Details
-                </h2>
+              <div className="flex items-center justify-between pt-4 border-t border-gray-800">
                 <button
-                  onClick={() => setShowDetailsModal(false)}
-                  className="text-gray-500 hover:text-gray-700"
+                  onClick={() => handleViewDetails(report)}
+                  className="text-indigo-400 hover:text-indigo-300 font-medium text-sm flex items-center space-x-1"
                 >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
+                  <Eye size={16} />
+                  <span>View</span>
+                </button>
+                <button
+                  onClick={() => confirmDeleteReport(report)}
+                  className="text-red-500 hover:text-red-400 font-medium text-sm flex items-center space-x-1"
+                >
+                  <Trash2 size={16} />
+                  <span>Delete</span>
                 </button>
               </div>
+            </div>
+          ))}
+        </div>
+      )}
 
-              <div className="p-6">
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div>
-                    <label className="text-sm font-medium text-gray-600">
-                      Team Name
-                    </label>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {selectedReport.teamName}
-                    </p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-600">
-                      Team Leader
-                    </label>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {selectedReport.teamLeaderName}
-                    </p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-600">
-                      Date
-                    </label>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {selectedReport.date}
-                    </p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-600">
-                      Attendance
-                    </label>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {selectedReport.present} / {selectedReport.totalEmployees}
-                    </p>
-                  </div>
-                </div>
+      {/* Delete Confirmation Modal (dark) */}
+      {showDeleteModal && reportToDelete && (
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-900 text-white rounded-lg shadow-xl max-w-md w-full border border-gray-800">
+            <div className="p-6">
+              <div className="flex items-center justify-center w-12 h-12 mx-auto bg-red-800 rounded-full mb-4">
+                <AlertTriangle className="text-red-300" size={24} />
+              </div>
 
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                  Employee Details
-                </h3>
-                <div className="overflow-x-auto">
-                  <table className="w-full border border-gray-300">
-                    <thead className="bg-purple-50">
-                      <tr>
-                        <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                          Name
-                        </th>
-                        <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                          Project
-                        </th>
-                        <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                          Daily Report
-                        </th>
-                        <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                          Punch In
-                        </th>
-                        <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                          Punch Out
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {selectedReport.employees?.map((emp, index) => (
-                        <tr key={index} className="border-t">
-                          <td className="px-4 py-2 text-sm">{emp.name}</td>
-                          <td className="px-4 py-2 text-sm">{emp.project}</td>
-                          <td className="px-4 py-2 text-sm">
-                            {emp.dailyReport}
-                          </td>
-                          <td className="px-4 py-2 text-sm">{emp.punchIn}</td>
-                          <td className="px-4 py-2 text-sm">{emp.punchOut}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+              <h3 className="text-lg font-semibold text-white text-center mb-2">
+                Delete Report
+              </h3>
+
+              <p className="text-sm text-gray-300 text-center mb-6">
+                Are you sure you want to delete the report for{" "}
+                <strong>{reportToDelete.teamName}</strong> dated{" "}
+                <strong>{reportToDelete.date}</strong>? This action cannot be
+                undone.
+              </p>
+
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={() => {
+                    setShowDeleteModal(false);
+                    setReportToDelete(null);
+                  }}
+                  className="px-4 py-2 text-gray-200 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors font-medium"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleDeleteReport}
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500 transition-colors font-medium"
+                >
+                  Delete Report
+                </button>
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* Add / Edit Report Popups (unchanged) */}
+      <ReportPopup
+        isOpen={showAddReportModal}
+        onClose={() => setShowAddReportModal(false)}
+        onSave={handleSaveReportData}
+        initialData={null}
+      />
+      <ReportPopup
+        isOpen={isPopupOpen}
+        onClose={() => {
+          setIsPopupOpen(false);
+          setEditingReport(null);
+        }}
+        onSave={handleSaveReport}
+        initialData={editingReport}
+      />
+
+      {/* Details Modal (dark) */}
+      {showDetailsModal && selectedReport && (
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-900 text-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-gray-800">
+            <div className="flex justify-between items-center p-6 border-b border-gray-800">
+              <h2 className="text-2xl font-bold text-white">Report Details</h2>
+              <button
+                onClick={() => setShowDetailsModal(false)}
+                className="text-gray-400 hover:text-gray-200"
+                aria-label="Close report details"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div className="p-6">
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div>
+                  <label className="text-sm font-medium text-gray-300">
+                    Team Name
+                  </label>
+                  <p className="text-lg font-semibold text-gray-100">
+                    {selectedReport.teamName}
+                  </p>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-300">
+                    Team Leader
+                  </label>
+                  <p className="text-lg font-semibold text-gray-100">
+                    {selectedReport.teamLeaderName}
+                  </p>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-300">
+                    Date
+                  </label>
+                  <p className="text-lg font-semibold text-gray-100">
+                    {selectedReport.date}
+                  </p>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-300">
+                    Attendance
+                  </label>
+                  <p className="text-lg font-semibold text-gray-100">
+                    {selectedReport.present} / {selectedReport.totalEmployees}
+                  </p>
+                </div>
+              </div>
+
+              <h3 className="text-lg font-semibold text-gray-100 mb-4">
+                Employee Details
+              </h3>
+              <div className="overflow-x-auto">
+                <table className="w-full border border-gray-700">
+                  <thead className="bg-gray-950">
+                    <tr>
+                      <th className="px-4 py-2 text-left text-sm font-semibold text-gray-300">
+                        Name
+                      </th>
+                      <th className="px-4 py-2 text-left text-sm font-semibold text-gray-300">
+                        Project
+                      </th>
+                      <th className="px-4 py-2 text-left text-sm font-semibold text-gray-300">
+                        Daily Report
+                      </th>
+                      <th className="px-4 py-2 text-left text-sm font-semibold text-gray-300">
+                        Punch In
+                      </th>
+                      <th className="px-4 py-2 text-left text-sm font-semibold text-gray-300">
+                        Punch Out
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {selectedReport.employees?.map((emp, index) => (
+                      <tr key={index} className="border-t border-gray-800">
+                        <td className="px-4 py-2 text-sm text-gray-200">
+                          {emp.name}
+                        </td>
+                        <td className="px-4 py-2 text-sm text-gray-200">
+                          {emp.project || "-"}
+                        </td>
+                        <td className="px-4 py-2 text-sm text-gray-200">
+                          {emp.dailyReport || "-"}
+                        </td>
+                        <td className="px-4 py-2 text-sm text-gray-200">
+                          {emp.punchIn || "-"}
+                        </td>
+                        <td className="px-4 py-2 text-sm text-gray-200">
+                          {emp.punchOut || "-"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* end of Details Modal */}
     </div>
   );
 };
